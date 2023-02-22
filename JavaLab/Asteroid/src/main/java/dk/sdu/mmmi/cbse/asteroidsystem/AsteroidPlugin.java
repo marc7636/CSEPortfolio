@@ -18,8 +18,8 @@ public class AsteroidPlugin implements IGamePluginService {
 	@Override
 	public void stop(GameData gameData, World world) {
 		// Remove entities
-		for (Entity enemy : world.getEntities(Asteroid.class)) {
-			world.removeEntity(enemy);
+		for (Entity asteroid : world.getEntities(Asteroid.class)) {
+			world.removeEntity(asteroid);
 		}
 	}
 }
