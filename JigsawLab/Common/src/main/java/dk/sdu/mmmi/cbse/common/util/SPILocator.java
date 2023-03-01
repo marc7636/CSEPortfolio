@@ -24,14 +24,12 @@ public class SPILocator {
 
         List<T> list = new ArrayList<>();
     
-        if (loader != null) {
-            try {
-                for (T instance : loader) {
-                    list.add(instance);
-                }
-            } catch (ServiceConfigurationError serviceError) {
-                serviceError.printStackTrace();
+        try {
+            for (T instance : loader) {
+                list.add(instance);
             }
+        } catch (ServiceConfigurationError serviceError) {
+            serviceError.printStackTrace();
         }
     
         if (printStatement) {
