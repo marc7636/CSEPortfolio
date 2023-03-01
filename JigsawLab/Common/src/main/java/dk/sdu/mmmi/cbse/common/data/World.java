@@ -32,12 +32,12 @@ public class World {
     }
 
     @SafeVarargs
-    public final <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {
-        List<Entity> r = new ArrayList<>();
+    public final <E extends Entity> List<E> getEntities(Class<E>... entityTypes) {
+        List<E> r = new ArrayList<>();
         for (Entity e : getEntities()) {
             for (Class<E> entityType : entityTypes) {
                 if (entityType.equals(e.getClass())) {
-                    r.add(e);
+                    r.add((E) e);
                 }
             }
         }

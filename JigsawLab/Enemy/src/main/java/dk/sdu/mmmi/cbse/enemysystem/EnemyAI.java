@@ -13,7 +13,7 @@ public class EnemyAI implements IEntityProcessingService {
 	
 	@Override
 	public void process(GameData gameData, World world) {
-		for (Entity enemy : world.getEntities(Enemy.class)) {
+		for (Enemy enemy : world.getEntities(Enemy.class)) {
 			PositionPart positionPart = enemy.getPart(PositionPart.class);
 			MovingPart movingPart = enemy.getPart(MovingPart.class);
 			

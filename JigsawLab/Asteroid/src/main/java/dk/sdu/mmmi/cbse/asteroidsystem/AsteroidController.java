@@ -20,12 +20,12 @@ public class AsteroidController implements IEntityProcessingService {
 			world.addEntity(createEnemy(gameData));
 		}
 		
-		for (Entity enemy : world.getEntities(Asteroid.class)) {
-			PositionPart positionPart = enemy.getPart(PositionPart.class);
-			MovingPart movingPart = enemy.getPart(MovingPart.class);
+		for (Asteroid asteroid : world.getEntities(Asteroid.class)) {
+			PositionPart positionPart = asteroid.getPart(PositionPart.class);
+			MovingPart movingPart = asteroid.getPart(MovingPart.class);
 			
-			movingPart.process(gameData, enemy);
-			positionPart.process(gameData, enemy);
+			movingPart.process(gameData, asteroid);
+			positionPart.process(gameData, asteroid);
 			
 			updateShape((Asteroid)enemy);
 		}
