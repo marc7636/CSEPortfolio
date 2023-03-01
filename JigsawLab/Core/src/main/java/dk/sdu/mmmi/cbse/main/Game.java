@@ -16,10 +16,8 @@ import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 
 import java.util.Collection;
 
-public class Game
-        implements ApplicationListener {
-
-    private static OrthographicCamera cam;
+public class Game implements ApplicationListener {
+    
     private ShapeRenderer sr;
 
     private final GameData gameData = new GameData();

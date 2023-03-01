@@ -24,8 +24,6 @@ public class AsteroidController implements IEntityProcessingService {
 			PositionPart positionPart = enemy.getPart(PositionPart.class);
 			MovingPart movingPart = enemy.getPart(MovingPart.class);
 			
-			updateEntity(enemy, movingPart);
-			
 			movingPart.process(gameData, enemy);
 			positionPart.process(gameData, enemy);
 			
@@ -109,9 +107,5 @@ public class AsteroidController implements IEntityProcessingService {
 		
 		asteroid.setShapeX(shapex);
 		asteroid.setShapeY(shapey);
-	}
-	
-	private void updateEntity(Entity entity, MovingPart movingPart){
-		
 	}
 }
