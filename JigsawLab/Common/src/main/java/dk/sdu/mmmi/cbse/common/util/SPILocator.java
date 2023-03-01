@@ -5,7 +5,7 @@ import java.util.*;
 public class SPILocator {
 
     @SuppressWarnings("rawtypes")
-    private static final Map<Class, ServiceLoader> loadermap = new HashMap<Class, ServiceLoader>();
+    private static final Map<Class, ServiceLoader> loadermap = new HashMap<>();
 
     private SPILocator() {
     }
@@ -22,8 +22,8 @@ public class SPILocator {
             printStatement = true;
         }
 
-        List<T> list = new ArrayList<T>();
-
+        List<T> list = new ArrayList<>();
+    
         if (loader != null) {
             try {
                 for (T instance : loader) {
@@ -33,7 +33,7 @@ public class SPILocator {
                 serviceError.printStackTrace();
             }
         }
-
+    
         if (printStatement) {
             System.out.println("Found " + list.size() + " implementations for interface: " + service.getName());
         }

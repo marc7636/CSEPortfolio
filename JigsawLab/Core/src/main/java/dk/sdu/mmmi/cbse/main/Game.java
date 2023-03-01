@@ -28,8 +28,8 @@ public class Game implements ApplicationListener {
 
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+    
+        OrthographicCamera cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
