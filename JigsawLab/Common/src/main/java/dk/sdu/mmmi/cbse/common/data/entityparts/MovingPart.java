@@ -15,8 +15,7 @@ import static java.lang.Math.sqrt;
  *
  * @author Alexander
  */
-public class MovingPart
-        implements EntityPart {
+public class MovingPart extends EntityPart {
 
     private float dx, dy;
     private float deceleration, acceleration;
@@ -114,5 +113,15 @@ public class MovingPart
 
         positionPart.setRadians(radians);
     }
-
+    
+    @Override
+    public MovingPart clone() {
+        MovingPart clone = new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed);
+        clone.setUp(up);
+        clone.setLeft(left);
+        clone.setRight(right);
+        
+        return clone;
+    }
+    
 }

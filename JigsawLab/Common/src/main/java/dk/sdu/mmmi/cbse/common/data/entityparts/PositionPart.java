@@ -12,7 +12,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
  *
  * @author Alexander
  */
-public class PositionPart implements EntityPart {
+public class PositionPart extends EntityPart {
 
     private float x;
     private float y;
@@ -57,7 +57,10 @@ public class PositionPart implements EntityPart {
     public void process(GameData gameData, Entity entity) {
     }
     
-    
+    @Override
+    public PositionPart clone() {
+        return new PositionPart(x, y, radians);
+    }
     
     
 }

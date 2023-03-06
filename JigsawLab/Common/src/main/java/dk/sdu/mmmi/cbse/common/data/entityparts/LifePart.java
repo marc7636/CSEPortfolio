@@ -12,7 +12,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
  *
  * @author Someone
  */
-public class LifePart implements EntityPart {
+public class LifePart extends EntityPart {
 
     private int life;
     private boolean isHit = false;
@@ -40,5 +40,10 @@ public class LifePart implements EntityPart {
     @Override
     public void process(GameData gameData, Entity entity) {
         
+    }
+    
+    @Override
+    public LifePart clone() {
+        return new LifePart(life);
     }
 }

@@ -7,11 +7,14 @@ package dk.sdu.mmmi.cbse.common.data.entityparts;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
+import java.lang.Cloneable;
 
 /**
  *
  * @author Alexander
  */
-public interface EntityPart {
-    void process(GameData gameData, Entity entity);
+public abstract class EntityPart implements Cloneable {
+    abstract void process(GameData gameData, Entity entity);
+    
+    abstract public EntityPart clone();
 }
