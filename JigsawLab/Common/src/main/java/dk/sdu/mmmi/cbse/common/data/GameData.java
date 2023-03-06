@@ -54,7 +54,7 @@ public class GameData {
     }
 
     public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {
-        List<Event> r = new ArrayList();
+        List<Event> r = new ArrayList<>();
         for (Event event : events) {
             if (event.getClass().equals(type) && event.source().getID().equals(sourceID)) {
                 r.add(event);

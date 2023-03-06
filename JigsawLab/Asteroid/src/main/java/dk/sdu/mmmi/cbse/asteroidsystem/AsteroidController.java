@@ -3,6 +3,7 @@ package dk.sdu.mmmi.cbse.asteroidsystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
@@ -23,6 +24,7 @@ public class AsteroidController implements IEntityProcessingService {
 		for (Asteroid asteroid : world.getEntities(Asteroid.class)) {
 			PositionPart positionPart = asteroid.getPart(PositionPart.class);
 			MovingPart movingPart = asteroid.getPart(MovingPart.class);
+			LifePart lifePart = asteroid.getPart(LifePart.class);
 			
 			movingPart.process(gameData, asteroid);
 			positionPart.process(gameData, asteroid);
@@ -48,6 +50,8 @@ public class AsteroidController implements IEntityProcessingService {
 		
 		asteroid.setShapeX(new float[6]);
 		asteroid.setShapeY(new float[6]);
+		
+		asteroid.add(new LifePart(1));
 		
 		return asteroid;
 	}

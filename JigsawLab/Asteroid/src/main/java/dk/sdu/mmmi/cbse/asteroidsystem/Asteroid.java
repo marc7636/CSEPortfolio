@@ -3,21 +3,22 @@ package dk.sdu.mmmi.cbse.asteroidsystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 
 public class Asteroid extends Entity {
-	private double size;
+	private float size;
 	
-	public Asteroid(double size){
-		this.size = size;
+	public Asteroid(float size){
+		setSize(size);
 	}
 	
-	public void setSize(double size) {
+	public void setSize(float size) {
 		this.size = size;
+		setRadius(size * 2);
 	}
 	
-	public double getSize() {
+	public float getSize() {
 		return size;
 	}
 	
-	public double getScale(){
+	public float getScale(){
 		return size * 2;
 	}
 }
