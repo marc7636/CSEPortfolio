@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.cbse.asteroidsystem;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
@@ -18,7 +17,7 @@ public class AsteroidController implements IEntityProcessingService {
 	@Override
 	public void process(GameData gameData, World world) {
 		if (rng.nextDouble() < (0.20f * gameData.getDelta())){
-			world.addEntity(createEnemy(gameData));
+			world.addEntity(createAsteroid(gameData));
 		}
 		
 		for (Asteroid asteroid : world.getEntities(Asteroid.class)) {
@@ -29,11 +28,19 @@ public class AsteroidController implements IEntityProcessingService {
 			movingPart.process(gameData, asteroid);
 			positionPart.process(gameData, asteroid);
 			
-			updateShape((Asteroid)enemy);
+			if (lifePart != null){
+				lifePart.process(gameData, asteroid);
+				if(lifePart.isHit()){
+					splitAsteroid(asteroid, gameData, world);
+					lifePart.setIsHit(false);
+				}
+			}
+			
+			updateShape(asteroid);
 		}
 	}
 	
-	private Entity createEnemy(GameData gameData) {
+	private Asteroid createAsteroid(GameData gameData) {
 		float deceleration = 0;
 		float acceleration = 300000f;
 		float maxSpeed = 100;
@@ -41,7 +48,7 @@ public class AsteroidController implements IEntityProcessingService {
 		PositionPart coords = getRandomSpawn(gameData);
 		
 		OptionalInt randomSize = rng.ints(1, 3, 9).findAny();
-		Entity asteroid = new Asteroid(randomSize.isPresent() ? randomSize.getAsInt() : 8);
+		Asteroid asteroid = new Asteroid(randomSize.isPresent() ? randomSize.getAsInt() : 8);
 		asteroid.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
 		asteroid.add(coords);
 		
@@ -51,7 +58,7 @@ public class AsteroidController implements IEntityProcessingService {
 		asteroid.setShapeX(new float[6]);
 		asteroid.setShapeY(new float[6]);
 		
-		asteroid.add(new LifePart(1));
+		asteroid.add(new LifePart((asteroid.getSize() - 1) / 2 ));
 		
 		return asteroid;
 	}
@@ -111,5 +118,36 @@ public class AsteroidController implements IEntityProcessingService {
 		
 		asteroid.setShapeX(shapex);
 		asteroid.setShapeY(shapey);
+	}
+	
+	@SuppressWarnings("DuplicatedCode")
+	private void splitAsteroid(Asteroid asteroid, GameData gameData, World world){
+		MovingPart movingPart = asteroid.getPart(MovingPart.class);
+		PositionPart coords = asteroid.getPart(PositionPart.class);
+		LifePart lifePart = asteroid.getPart(LifePart.class);
+		
+		Asteroid asteroid1 = new Asteroid(asteroid.getSize() / 2);
+		asteroid1.add(movingPart.clone());
+		asteroid1.add(coords.clone());
+		asteroid1.setShapeX(asteroid.getShapeX());
+		asteroid1.setShapeY(asteroid.getShapeY());
+		asteroid1.add(new LifePart(lifePart.getLife() - 1));
+		
+		Asteroid asteroid2 = new Asteroid(asteroid.getSize() / 2);
+		asteroid2.add(movingPart.clone());
+		asteroid2.add(coords.clone());
+		asteroid2.setShapeX(asteroid.getShapeX());
+		asteroid2.setShapeY(asteroid.getShapeY());
+		asteroid2.add(new LifePart(lifePart.getLife() - 1));
+		
+		PositionPart pos1 = asteroid1.getPart(PositionPart.class);
+		pos1.setRadians(coords.getRadians() - (float) Math.PI / 4);
+		
+		PositionPart pos2 = asteroid2.getPart(PositionPart.class);
+		pos2.setRadians(coords.getRadians() + (float) Math.PI / 2);
+		
+		world.removeEntity(asteroid);
+		world.addEntity(asteroid1);
+		world.addEntity(asteroid2);
 	}
 }

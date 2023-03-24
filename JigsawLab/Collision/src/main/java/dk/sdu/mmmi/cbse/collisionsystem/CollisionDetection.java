@@ -13,9 +13,6 @@ public class CollisionDetection implements IPostEntityProcessingService {
 		// two for loops for all entities in the world
 		for (Entity entity : world.getEntities()) {
 			for (Entity collisionDetection : world.getEntities()) {
-				// get life parts on all entities
-				LifePart entityLife = entity.getPart(LifePart.class);
-				
 				// if the two entities are identical, skip the iteration
 				if (entity.getID().equals(collisionDetection.getID())) {
 					continue;
@@ -24,17 +21,23 @@ public class CollisionDetection implements IPostEntityProcessingService {
 				}
 				
 				// CollisionDetection
-				if (this.collides(entity, collisionDetection)) {
-					// if entity has been hit, and should have its life reduced
-					if (entityLife.getLife() > 0) {
-						entityLife.setLife(entityLife.getLife() - 1);
-						entityLife.setIsHit(true);
-						// if entity is out of life - remove
-						if (entityLife.getLife() <= 0) {
-							world.removeEntity(entity);
-						}
-					}
+				if (this.collides(entity, collisionDetection) && entity.getClass() != collisionDetection.getClass()) {
+					applyDamage(entity, world);
+					applyDamage(collisionDetection, world);
 				}
+			}
+		}
+	}
+	
+	private void applyDamage(Entity entity, World world){
+		LifePart entityLife = entity.getPart(LifePart.class);
+		// if entity has been hit, and should have its life reduced
+		if (entityLife.getLife() > 0) {
+			entityLife.setLife(entityLife.getLife() - 1);
+			entityLife.setIsHit(true);
+			// if entity is out of life - remove
+			if (entityLife.getLife() <= 0){
+				world.removeEntity(entity);
 			}
 		}
 	}
