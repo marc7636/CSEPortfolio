@@ -5,6 +5,7 @@ import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
 
 module Player {
 	requires Common;
+	requires CommonBullet;
 	provides IEntityProcessingService with PlayerControlSystem;
 	provides IGamePluginService with PlayerPlugin;
 }
