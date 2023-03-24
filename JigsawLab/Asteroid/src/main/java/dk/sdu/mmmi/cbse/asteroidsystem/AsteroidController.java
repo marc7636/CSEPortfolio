@@ -31,8 +31,10 @@ public class AsteroidController implements IEntityProcessingService {
 			if (lifePart != null){
 				lifePart.process(gameData, asteroid);
 				if(lifePart.isHit()){
-					splitAsteroid(asteroid, gameData, world);
-					lifePart.setIsHit(false);
+					for (Asteroid a : splitAsteroid(asteroid)){
+						world.addEntity(a);
+					}
+					world.removeEntity(asteroid);
 				}
 			}
 			
@@ -121,7 +123,7 @@ public class AsteroidController implements IEntityProcessingService {
 	}
 	
 	@SuppressWarnings("DuplicatedCode")
-	private void splitAsteroid(Asteroid asteroid, GameData gameData, World world){
+	private Asteroid[] splitAsteroid(Asteroid asteroid){
 		MovingPart movingPart = asteroid.getPart(MovingPart.class);
 		PositionPart coords = asteroid.getPart(PositionPart.class);
 		LifePart lifePart = asteroid.getPart(LifePart.class);
@@ -129,25 +131,26 @@ public class AsteroidController implements IEntityProcessingService {
 		Asteroid asteroid1 = new Asteroid(asteroid.getSize() / 2);
 		asteroid1.add(movingPart.clone());
 		asteroid1.add(coords.clone());
-		asteroid1.setShapeX(asteroid.getShapeX());
-		asteroid1.setShapeY(asteroid.getShapeY());
+		asteroid1.setShapeX(asteroid.getShapeX().clone());
+		asteroid1.setShapeY(asteroid.getShapeY().clone());
 		asteroid1.add(new LifePart(lifePart.getLife() - 1));
 		
 		Asteroid asteroid2 = new Asteroid(asteroid.getSize() / 2);
 		asteroid2.add(movingPart.clone());
 		asteroid2.add(coords.clone());
-		asteroid2.setShapeX(asteroid.getShapeX());
-		asteroid2.setShapeY(asteroid.getShapeY());
+		asteroid2.setShapeX(asteroid.getShapeX().clone());
+		asteroid2.setShapeY(asteroid.getShapeY().clone());
 		asteroid2.add(new LifePart(lifePart.getLife() - 1));
 		
 		PositionPart pos1 = asteroid1.getPart(PositionPart.class);
 		pos1.setRadians(coords.getRadians() - (float) Math.PI / 4);
 		
 		PositionPart pos2 = asteroid2.getPart(PositionPart.class);
-		pos2.setRadians(coords.getRadians() + (float) Math.PI / 2);
+		pos2.setRadians(coords.getRadians() + (float) Math.PI / 4);
 		
-		world.removeEntity(asteroid);
-		world.addEntity(asteroid1);
-		world.addEntity(asteroid2);
+		Asteroid[] arr = new Asteroid[2];
+		arr[0] = asteroid1;
+		arr[1] = asteroid2;
+		return arr;
 	}
 }
