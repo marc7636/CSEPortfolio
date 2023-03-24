@@ -23,13 +23,15 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             PositionPart positionPart = bullet.getPart(PositionPart.class);
             MovingPart movingPart = bullet.getPart(MovingPart.class);
             TimerPart timerPart = bullet.getPart(TimerPart.class);
+            LifePart lifePart = bullet.getPart(LifePart.class);
             movingPart.setUp(true);
-            if (timerPart.getExpiration() < 0) {
+            if (timerPart.getExpiration() <= 0 || lifePart.getLife() <= 0) {
                 world.removeEntity(bullet);
             }
             timerPart.process(gameData, bullet);
             movingPart.process(gameData, bullet);
             positionPart.process(gameData, bullet);
+            lifePart.process(gameData, bullet);
 
             setShape(bullet);
         }
