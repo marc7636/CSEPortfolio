@@ -19,7 +19,8 @@ import dk.sdu.mmmi.cbse.common.util.SPILocator;
  * @author jcs
  */
 public class PlayerControlSystem implements IEntityProcessingService {
-
+    int bulletCooldown = 0;
+    
     @Override
     public void process(GameData gameData, World world) {
 
@@ -31,11 +32,13 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setRight(gameData.getKeys().isDown(RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(UP));
     
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && bulletCooldown <= 0) {
                 for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
                     world.addEntity(bullet.createBullet(player, gameData));
                 }
+                bulletCooldown = 100;
             }
+            bulletCooldown--;
             
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
