@@ -12,7 +12,9 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.util.SPILocator;
+import dk.sdu.mmmi.cbse.playersystem.util.SPILocator;
+
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,7 @@ import dk.sdu.mmmi.cbse.common.util.SPILocator;
  */
 public class PlayerControlSystem implements IEntityProcessingService {
     int bulletCooldown = 0;
+    List<BulletSPI> bullets = SPILocator.locateAll(BulletSPI.class);
     
     @Override
     public void process(GameData gameData, World world) {
@@ -33,7 +36,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setUp(gameData.getKeys().isDown(UP));
     
             if (gameData.getKeys().isDown(GameKeys.SPACE) && bulletCooldown <= 0) {
-                for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
+                for (BulletSPI bullet : bullets) {
                     world.addEntity(bullet.createBullet(player, gameData));
                 }
                 bulletCooldown = 100;

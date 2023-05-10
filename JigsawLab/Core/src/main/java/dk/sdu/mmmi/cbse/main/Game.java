@@ -11,13 +11,14 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.util.SPILocator;
+import dk.sdu.mmmi.cbse.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+@Component("game")
 public class Game implements ApplicationListener {
-    
     private ShapeRenderer sr;
 
     private final GameData gameData = new GameData();
@@ -40,8 +41,8 @@ public class Game implements ApplicationListener {
         );
         
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
-            iGamePlugin.start(gameData, world);
+        for (IGamePluginService iGamePluginService : getPluginServices()) {
+            iGamePluginService.start(gameData, world);
         }
     }
 

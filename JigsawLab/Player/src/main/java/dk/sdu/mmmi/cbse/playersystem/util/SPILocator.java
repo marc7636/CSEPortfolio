@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.common.util;
+package dk.sdu.mmmi.cbse.playersystem.util;
 
 import java.util.*;
 
