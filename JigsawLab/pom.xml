@@ -19,6 +19,7 @@
 
     <properties>
         <java>java</java>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
         <surefire.version>3.0.0</surefire.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>

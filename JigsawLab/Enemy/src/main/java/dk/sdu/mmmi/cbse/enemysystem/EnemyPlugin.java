@@ -22,7 +22,7 @@ public class EnemyPlugin implements IGamePluginService {
 		world.addEntity(enemy);
 	}
 	
-	private Entity createEnemy(GameData gameData) {
+	static Entity createEnemy(GameData gameData) {
 		
 		float deceleration = 10;
 		float acceleration = 200;
@@ -36,7 +36,7 @@ public class EnemyPlugin implements IGamePluginService {
 		enemyShip.setRadius(8);
 		enemyShip.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
 		enemyShip.add(new PositionPart(x, y, radians));
-		enemyShip.add(new LifePart(1));
+		enemyShip.add(new LifePart(2));
 		
 		return enemyShip;
 	}

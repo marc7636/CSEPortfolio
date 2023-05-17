@@ -27,17 +27,33 @@ public class MovingPart extends EntityPart {
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
     }
+    
+    public float getDeceleration() {
+        return deceleration;
+    }
 
     public void setDeceleration(float deceleration) {
         this.deceleration = deceleration;
+    }
+    
+    public float getAcceleration() {
+        return acceleration;
     }
 
     public void setAcceleration(float acceleration) {
         this.acceleration = acceleration;
     }
+    
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
 
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+    
+    public float getRotationSpeed() {
+        return rotationSpeed;
     }
 
     public void setRotationSpeed(float rotationSpeed) {
