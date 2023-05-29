@@ -11,6 +11,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.IPreEntityProcessingService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.util.SPILocator;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,9 @@ public class Game implements ApplicationListener {
 
     private void update() {
         // Update
+        for (IPreEntityProcessingService preEntityProcessorService : getPreEntityProcessingServices()) {
+            preEntityProcessorService.process(gameData, world);
+        }
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
@@ -111,6 +115,10 @@ public class Game implements ApplicationListener {
     
     private Collection<? extends IGamePluginService> getPluginServices() {
         return SPILocator.locateAll(IGamePluginService.class);
+    }
+    
+    private Collection<? extends IPreEntityProcessingService> getPreEntityProcessingServices() {
+        return SPILocator.locateAll(IPreEntityProcessingService.class);
     }
     
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
