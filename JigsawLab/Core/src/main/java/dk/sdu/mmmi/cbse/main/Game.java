@@ -110,6 +110,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+        for (IGamePluginService iGamePluginService : getPluginServices()) {
+            iGamePluginService.stop(gameData, world);
+        }
     }
     
     private Collection<? extends IGamePluginService> getPluginServices() {
