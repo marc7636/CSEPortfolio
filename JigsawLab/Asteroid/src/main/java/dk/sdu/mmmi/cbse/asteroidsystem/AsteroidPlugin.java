@@ -15,6 +15,9 @@ public class AsteroidPlugin implements IGamePluginService {
 		//asteroidSplitTest(gameData, world);
 	}
 	
+	/**
+	 * Creates a scenario for testing whether the asteroid splitting system splits as desired.
+	 */
 	private void asteroidSplitTest(GameData gameData, World world){
 		float deceleration = 0;
 		float acceleration = 300000f;
