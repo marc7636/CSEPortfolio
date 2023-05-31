@@ -49,7 +49,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-
+        gameData.getKeys().update();
+        
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -59,8 +60,6 @@ public class Game implements ApplicationListener {
         update();
         
         draw();
-
-        gameData.getKeys().update();
     }
 
     private void update() {
